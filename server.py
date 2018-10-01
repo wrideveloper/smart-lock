@@ -13,6 +13,36 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dt_admin:yafi2105@localhost/pro
 
 
 
+
+#database model
+class User(db.Model):
+
+    __tablename__ = 'user'
+
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(10))
+    activitie = db.relationship("Activities",uselist = False,back_populates = "usr")
+
+    @property
+    def serializable(self):
+        return {'id' : self.id, 'username' : self.username}
+
+
+class Activities(db.Model):
+
+    __tablename__ = 'activities'
+
+    activities_id = db.Column(db.Integer, primary_key = True)
+    activ = db.Column(db.Boolean, default = False)
+    time = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    usr = db.relationship("User", back_populates = "activitie")
+
+    @property
+    def serializable(self):
+        return {'activities_id' : self.activities_id, 'activ' : self.activ,
+        'time' : self.time,'user_id' : self.user_id}
+
 #route
 @app.route('/')
 def home():
@@ -21,4 +51,5 @@ def home():
 
 
 if __name__ == '__main__':
+    db.create_all()
     app.run(debug = True, host = '0.0.0.0')
