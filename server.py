@@ -49,6 +49,13 @@ def home():
     return 'Hello World'
 
 
+class Coba(Resource):
+
+    def get(self):
+        return {'Status' : 'JANCUK'}
+
+
+api.add_resource(Coba,'/coba/api/hello/')
 
 if __name__ == '__main__':
     db.create_all()
