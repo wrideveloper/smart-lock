@@ -24,9 +24,9 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+import time 
 
 continue_reading = True
-
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
@@ -41,8 +41,8 @@ signal.signal(signal.SIGINT, end_read)
 MIFAREReader = MFRC522.MFRC522()
 
 # Welcome message
-print "Welcome to the MFRC522 data read example"
-print "Press Ctrl-C to stop."
+print "Welcome to the Workshop Riset Infromatika"
+
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
@@ -60,17 +60,24 @@ while continue_reading:
     # If we have the UID, continue
     if status == MIFAREReader.MI_OK:
 
-        # Print UID
-        print "Card read UID: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+        # print uid
+        print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
     
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
+        # this is the default key for authentication
+        key = [0xff,0xff,0xff,0xff,0xff,0xff]
         
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
+        # select the scanned tag
+        mifarereader.mfrc522_selecttag(uid)
+        #turn on led
+        gpio.setup(8, gpio.out)
+        gpio.output(8, gpio.high)
+        #stop looping
+        time.sleep(3)
+        continue_reading = False
+        gpio.output(8, gpio.low)
+        
+        # authenticate
+        status = mifarereader.mfrc522_auth(mifarereader.picc_authent1a, 8, key, uid)
 
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
@@ -78,4 +85,3 @@ while continue_reading:
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"
-

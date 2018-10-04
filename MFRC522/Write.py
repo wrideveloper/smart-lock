@@ -24,7 +24,7 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
-
+import random
 continue_reading = True
 
 # Capture SIGINT for cleanup when the script is aborted
@@ -77,7 +77,8 @@ while continue_reading:
 
             # Fill the data with 0xFF
             for x in range(0,16):
-                data.append(0xFF)
+                a = random.randint(0,254)
+                data.append(a)
 
             print "Sector 8 looked like this:"
             # Read block 8
@@ -93,8 +94,8 @@ while continue_reading:
             # Check to see if it was written
             MIFAREReader.MFRC522_Read(8)
             print "\n"
-
             data = []
+
             # Fill the data with 0x00
             #for x in range(0,16):
             #    data.append(0x00)
