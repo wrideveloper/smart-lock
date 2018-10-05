@@ -22,7 +22,7 @@
 #
 
 import RPi.GPIO as GPIO
-import MFRC522
+import MFRC522 
 import signal
 import time 
 
@@ -45,6 +45,7 @@ print "Welcome to the Workshop Riset Infromatika"
 
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
+
 while continue_reading:
     
     # Scan for cards    
@@ -62,22 +63,22 @@ while continue_reading:
 
         # print uid
         print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
-    
+
         # this is the default key for authentication
         key = [0xff,0xff,0xff,0xff,0xff,0xff]
         
         # select the scanned tag
-        mifarereader.mfrc522_selecttag(uid)
+        MIFAREReader.MFRC522_SelectTag(uid)
         #turn on led
-        gpio.setup(8, gpio.out)
-        gpio.output(8, gpio.high)
+        GPIO.setup(8, GPIO.OUT)
+        GPIO.output(8, GPIO.HIGH)
         #stop looping
         time.sleep(3)
         continue_reading = False
-        gpio.output(8, gpio.low)
-        
+        GPIO.output(8, GPIO.LOW)
+        GPIO.cleanup()
         # authenticate
-        status = mifarereader.mfrc522_auth(mifarereader.picc_authent1a, 8, key, uid)
+        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
 
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
@@ -85,3 +86,50 @@ while continue_reading:
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"
+            
+            
+def __init__ (self):
+    # Hook the SIGINT
+    signal.signal(signal.SIGINT, end_read)
+
+    # Create an object of the class MFRC522
+    MIFAREReader = MFRC522.MFRC522()
+
+    # Welcome message
+    print "Welcome to the Workshop Riset Infromatika"
+
+def detected(self):
+    read = True
+    while read :
+    
+    # Scan for cards    
+    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+
+    # If a card is found
+    if status == MIFAREReader.MI_OK:
+        print "Card detected"
+    
+    # Get the UID of the card
+    (status,uid) = MIFAREReader.MFRC522_Anticoll()
+
+    # If we have the UID, continue
+    if status == MIFAREReader.MI_OK:
+
+        # print uid
+        print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+
+        # this is the default key for authentication
+        key = [0xff,0xff,0xff,0xff,0xff,0xff]
+        
+        # select the scanned tag
+        MIFAREReader.MFRC522_SelectTag(uid)
+        #turn on led
+        GPIO.setup(8, GPIO.OUT)
+        GPIO.output(8, GPIO.HIGH)
+        #stop looping
+        time.sleep(3)
+        continue_reading = False
+        GPIO.output(8, GPIO.LOW)
+        read = False
+        return True
+        GPIO.cleanup()
