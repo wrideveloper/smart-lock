@@ -73,16 +73,19 @@ while continue_reading:
         if status == MIFAREReader.MI_OK:
 
             # Variable for the data to write
-            data = []
+            #data = []
 
             # Fill the data with 0xFF
-            for x in range(0,16):
+            #for x in range(0,16):
                 #a = random.randint(0,254)
-                a = 'adit'
-                if len(a) > 16:
-                    name = a[:16]
-                b = [ord(x) for x in list(name)]
-                data.append(b)
+            a = 'abiyyu yafi jelek'
+            if len(a) > 16:
+                a = a[:16]
+            data = [ord(x) for x in a]
+                
+                #data.append(b)
+            print data
+                #print "\n"
 
             print "Sector 8 looked like this:"
             # Read block 8
