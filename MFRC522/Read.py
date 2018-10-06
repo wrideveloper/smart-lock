@@ -52,6 +52,8 @@ while continue_reading:
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # If a card is found
+    
+    
     if status == MIFAREReader.MI_OK:
         print "Card detected"
     
@@ -103,33 +105,36 @@ def detected(self):
     while read :
     
     # Scan for cards    
-    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # If a card is found
-    if status == MIFAREReader.MI_OK:
-        print "Card detected"
+        if status == MIFAREReader.MI_OK:
+            print "Card detected"
     
     # Get the UID of the card
-    (status,uid) = MIFAREReader.MFRC522_Anticoll()
+        (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
     # If we have the UID, continue
-    if status == MIFAREReader.MI_OK:
+        if status == MIFAREReader.MI_OK:
 
         # print uid
-        print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+            print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
 
         # this is the default key for authentication
-        key = [0xff,0xff,0xff,0xff,0xff,0xff]
+            key = [0xff,0xff,0xff,0xff,0xff,0xff]
         
         # select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
+            MIFAREReader.MFRC522_SelectTag(uid)
+            
+        #liat isi tag di sector8  (array isi 16)
+            MIFAREReader.MFRC522_Read(8)
         #turn on led
-        GPIO.setup(8, GPIO.OUT)
-        GPIO.output(8, GPIO.HIGH)
+            GPIO.setup(8, GPIO.OUT)
+            GPIO.output(8, GPIO.HIGH)
         #stop looping
-        time.sleep(3)
-        continue_reading = False
-        GPIO.output(8, GPIO.LOW)
-        read = False
-        return True
-        GPIO.cleanup()
+            time.sleep(3)
+            continue_reading = False
+            GPIO.output(8, GPIO.LOW)
+            read = False
+            return True
+            GPIO.cleanup()

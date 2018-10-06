@@ -77,8 +77,9 @@ while continue_reading:
 
             # Fill the data with 0xFF
             for x in range(0,16):
-                a = random.randint(0,254)
-                data.append(a)
+                #a = random.randint(0,254)
+                a = 'adit'
+                data.append(int(a))
 
             print "Sector 8 looked like this:"
             # Read block 8
