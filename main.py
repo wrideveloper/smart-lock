@@ -3,7 +3,7 @@
 #from client import Client
 #from Solenoid import Solenoid (kalo udah ada)
 import requests
-from server import app
+#from server import app
 
 """
 reading = Read() #instansiasi class Read.py
