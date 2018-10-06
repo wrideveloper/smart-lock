@@ -24,8 +24,13 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
-import time
+import time,sys
+sys.path.append('..')
 #local import
+from main import Client
+
+cc = Client()#instansiasi class client
+
 
 continue_reading = True
 # Capture SIGINT for cleanup when the script is aborted
@@ -66,6 +71,9 @@ while continue_reading:
 
         # print uid
         print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+        #uuid = "%s,%s,%s,%s"% (uid[0], uid[1], uid[2], uid[3])
+        uuid = "%s%s%s%s" % (uid[0], uid[1], uid[2], uid[3])
+        cc.masuk(int(uuid))
 
         # this is the default key for authentication
         key = [0xff,0xff,0xff,0xff,0xff,0xff]
@@ -118,7 +126,7 @@ def detected(self):
     # If we have the UID, continue
         if status == MIFAREReader.MI_OK:
 
-            cc.masuk(uid)
+            
         # print uid
             print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
 

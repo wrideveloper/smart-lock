@@ -1,6 +1,7 @@
 from flask import Flask
 #from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api , reqparse, abort
+import datetime
 
 
 app = Flask(__name__)
@@ -59,9 +60,7 @@ class Coba(Resource):
             'uid' : uid,
             'time' : str(now)
         }
-        s = '112-112-21-163'
-
-        return {'status' : 'berhasil'}
+        return {'status' : data}
 
 
 api.add_resource(Coba,'/smartlock/api/<uid>')
