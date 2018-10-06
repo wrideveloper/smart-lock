@@ -1,33 +1,9 @@
-#!/usr/bin/env python
-# -*- coding: utf8 -*-
-#
-#    Copyright 2014,2018 Mario Gomez <mario.gomez@teubi.co>
-#
-#    This file is part of MFRC522-Python
-#    MFRC522-Python is a simple Python implementation for
-#    the MFRC522 NFC Card Reader for the Raspberry Pi.
-#
-#    MFRC522-Python is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Lesser General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    MFRC522-Python is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Lesser General Public License for more details.
-#
-#    You should have received a copy of the GNU Lesser General Public License
-#    along with MFRC522-Python.  If not, see <http://www.gnu.org/licenses/>.
-#
-
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
 import random
 continue_reading = True
 
-# Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
     global continue_reading
     print "Ctrl+C captured, ending read."
@@ -73,19 +49,7 @@ while continue_reading:
         if status == MIFAREReader.MI_OK:
 
             # Variable for the data to write
-            #data = []
-
-            # Fill the data with 0xFF
-            #for x in range(0,16):
-                #a = random.randint(0,254)
-            name = raw_input("Insert Username : ")
-            if len(name) > 16:
-                name = name[:16]
-            data = [ord(x) for x in name]
-                
-                #data.append(b)
-            print data
-                #print "\n"
+            data = []
 
             print "Sector 8 looked like this:"
             # Read block 8
@@ -97,21 +61,15 @@ while continue_reading:
             MIFAREReader.MFRC522_Write(8, data)
             print "\n"
 
-            print "It now looks like this:"
-            # Check to see if it was written
-            MIFAREReader.MFRC522_Read(8)
-            print "\n"
-            data = []
 
             # Fill the data with 0x00
-            #for x in range(0,16):
-            #    data.append(0x00)
+            for x in range(0,16):
+                data.append(0)
+            print "Now we fill it with 0x00:"
+            MIFAREReader.MFRC522_Write(8, data)
+            print "\n"
 
-            #print "Now we fill it with 0x00:"
-            #MIFAREReader.MFRC522_Write(8, data)
-            #print "\n"
-
-            #print "It is now empty:"
+            print "It is now empty:"
 
             # Check to see if it was written
             MIFAREReader.MFRC522_Read(8)
