@@ -1,12 +1,13 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+#from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api , reqparse, abort
 
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
 api = Api(app)
 
+"""
 #database
 app.config['SECERET_KEY'] = 'kjaiufdknd5433342!@#$%^&*'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dt_admin:yafi2105@localhost/project'
@@ -42,7 +43,7 @@ class Activities(db.Model):
     def serializable(self):
         return {'activities_id' : self.activities_id, 'activ' : self.activ,
         'time' : self.time,'user_id' : self.user_id}
-
+"""
 #route
 @app.route('/')
 def home():

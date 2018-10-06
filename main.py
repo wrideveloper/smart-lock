@@ -26,9 +26,9 @@ class Client:
 
 	def masuk(self,uuid):
 
-		result = requests.get('http://172.16.123.5:5000/smartlock/api/{}'.format(uuid))
+		result = requests.get('http://10.42.0.90:5000/smartlock/api/{}'.format(uuid))
 
 		return result.json()['status']
-
+	    
 if __name__ == '__main__':
-    app.run(debug = True, host = '0.0.0.0')
+    app.run(debug = True,host = '0.0.0.0')
