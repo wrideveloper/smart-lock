@@ -3,13 +3,13 @@ import json
 
 class Client:
 	server = 'http://192.168.0.0:5000'
-        
+
         #metod buat buka pintu
-	def open(self):
+	def open(self, uid):
 		result = requests.get(self.server + '/activ')
 		#return status pintu buka
 		return result.json()['activ']
-        
+
         #metod buat tutup pintu
 	def lock(self):
 		result = requests.get(self.server + '/activ')
@@ -21,4 +21,3 @@ if __name__ == '__main__':
 	client = Client()
 	#tampilin status di terminal
 	print client.activ()
-

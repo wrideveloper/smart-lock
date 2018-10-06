@@ -22,9 +22,15 @@
 #
 
 import RPi.GPIO as GPIO
-import MFRC522 
+import MFRC522
 import signal
-import time 
+import time
+#local import
+from . import main
+from main import Client
+
+cc = Client()#instansiasi class client
+
 
 continue_reading = True
 # Capture SIGINT for cleanup when the script is aborted
@@ -47,16 +53,16 @@ print "Welcome to the Workshop Riset Infromatika"
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 
 while continue_reading:
-    
-    # Scan for cards    
+
+    # Scan for cards
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # If a card is found
-    
-    
+
+
     if status == MIFAREReader.MI_OK:
         print "Card detected"
-    
+
     # Get the UID of the card
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
@@ -68,7 +74,7 @@ while continue_reading:
 
         # this is the default key for authentication
         key = [0xff,0xff,0xff,0xff,0xff,0xff]
-        
+
         # select the scanned tag
         MIFAREReader.MFRC522_SelectTag(uid)
         #turn on led
@@ -88,8 +94,8 @@ while continue_reading:
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"
-            
-            
+
+
 def __init__ (self):
     # Hook the SIGINT
     signal.signal(signal.SIGINT, end_read)
@@ -103,29 +109,30 @@ def __init__ (self):
 def detected(self):
     read = True
     while read :
-    
-    # Scan for cards    
+
+    # Scan for cards
         (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
     # If a card is found
         if status == MIFAREReader.MI_OK:
             print "Card detected"
-    
+
     # Get the UID of the card
         (status,uid) = MIFAREReader.MFRC522_Anticoll()
 
     # If we have the UID, continue
         if status == MIFAREReader.MI_OK:
 
+            cc.masuk(uid)
         # print uid
             print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
 
         # this is the default key for authentication
             key = [0xff,0xff,0xff,0xff,0xff,0xff]
-        
+
         # select the scanned tag
             MIFAREReader.MFRC522_SelectTag(uid)
-            
+
         #liat isi tag di sector8  (array isi 16)
             MIFAREReader.MFRC522_Read(8)
         #turn on led

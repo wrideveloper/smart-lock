@@ -51,12 +51,16 @@ def home():
 
 class Coba(Resource):
 
-    def get(self):
-        return {'Status' : 'JANCUK'}
+    def get(self,uid):
+        now = datetime.datetime.now()
+        data = {
+
+            'uid' : uid,
+            'time' : str(now)
+        }
+        s = '112-112-21-163'
+
+        return {'status' : 'berhasil'}
 
 
-api.add_resource(Coba,'/coba/api/hello/')
-
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug = True, host = '0.0.0.0')
+api.add_resource(Coba,'/smartlock/api/<uid>')
