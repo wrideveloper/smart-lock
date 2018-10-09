@@ -47,11 +47,10 @@ while continue_reading:
 
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
-
-            # Variable for the data to write
             data = []
-
+            # Variable for the data to write
             print "Sector 8 looked like this:"
+
             # Read block 8
             MIFAREReader.MFRC522_Read(8)
             print "\n"
@@ -61,14 +60,14 @@ while continue_reading:
            # MIFAREReader.MFRC522_Write(8, data)
             #print "\n"
 
-
             # Fill the data with 0x00
-            for x in range(0,16):
-                data.append(0)
+            usr = 0
+            if len(usr) > 16:
+                usr = usr[:16]
+            data = [(x) for x in usr]
             print "Now we fill it with 0x00:"
             MIFAREReader.MFRC522_Write(8, data)
             print "\n"
-
             print "It is now empty:"
 
             # Check to see if it was written
