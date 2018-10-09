@@ -58,8 +58,8 @@ while continue_reading:
 
             print "Sector 8 will now be filled with 0xFF:"
             # Write the data
-            MIFAREReader.MFRC522_Write(8, data)
-            print "\n"
+           # MIFAREReader.MFRC522_Write(8, data)
+            #print "\n"
 
 
             # Fill the data with 0x00
