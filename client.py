@@ -5,7 +5,7 @@ class Client:
 	server = 'http://192.168.0.0:5000'
 
         #metod buat buka pintu
-	def open(self, uid):
+	def masuk(self, uid):
 		result = requests.get(self.server + '/activ')
 		#return status pintu buka
 		return result.json()['activ']

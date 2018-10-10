@@ -26,10 +26,12 @@ import MFRC522
 import signal
 import time,sys
 sys.path.append('..')
+
 #local import
 from main import Client
 
 cc = Client()#instansiasi class client
+
 
 
 continue_reading = True
