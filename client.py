@@ -2,7 +2,7 @@ import requests
 import json
 
 class Client:
-	server = 'http://10.42.0.215:5000'
+	server = 'http://192.168.0.0:5000'
 
         #metod buat buka pintu
 	def open(self, uid):
