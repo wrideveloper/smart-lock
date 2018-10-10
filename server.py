@@ -1,66 +1,21 @@
 from flask import Flask
-#from flask_sqlalchemy import SQLAlchemy
-from flask_restful import Resource, Api , reqparse, abort
-import datetime
+from flask_restful import Resource, reqparse,Api
 
 
 app = Flask(__name__)
-#db = SQLAlchemy(app)
 api = Api(app)
 
-"""
-#database
-app.config['SECERET_KEY'] = 'kjaiufdknd5433342!@#$%^&*'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://dt_admin:yafi2105@localhost/project'
+parser = reqparse.RequestParser()
+parser.add_argument('uid')
 
 
 
+class UserMasuk(Resource):
 
-#database model
-class User(db.Model):
-
-    __tablename__ = 'user'
-
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(10))
-    activitie = db.relationship("Activities",uselist = False,back_populates = "usr")
-
-    @property
-    def serializable(self):
-        return {'id' : self.id, 'username' : self.username}
+    def get(self):
+        data = parser.parse_args()
+        return data
 
 
-class Activities(db.Model):
 
-    __tablename__ = 'activities'
-
-    activities_id = db.Column(db.Integer, primary_key = True)
-    activ = db.Column(db.Boolean, default = False)
-    time = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    usr = db.relationship("User", back_populates = "activitie")
-
-    @property
-    def serializable(self):
-        return {'activities_id' : self.activities_id, 'activ' : self.activ,
-        'time' : self.time,'user_id' : self.user_id}
-"""
-#route
-@app.route('/')
-def home():
-    return 'Hello World'
-
-
-class Coba(Resource):
-
-    def get(self,uid):
-        now = datetime.datetime.now()
-        data = {
-
-            'uid' : uid,
-            'time' : str(now)
-        }
-        return {'status' : data}
-
-
-api.add_resource(Coba,'/smartlock/api/<uid>')
+api.add_resource(UserMasuk,'/smartlock/api/<uid>')

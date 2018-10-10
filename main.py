@@ -1,7 +1,4 @@
-#import RPi.GPIO as GPIO
-#from .MFRC522 import Read
-#from client import Client
-#from Solenoid import Solenoid (kalo udah ada)
+
 import requests
 from server import app
 
@@ -27,8 +24,8 @@ class Client:
 	def masuk(self,uuid):
 
 		result = requests.get('10.42.0.215/smartlock/api/{}'.format(uuid))
+		message = {'status' : 'berhasil'}
+		return message
 
-		return result.json()['status']
-	    
 if __name__ == '__main__':
     app.run(debug = True,host = '0.0.0.0')
