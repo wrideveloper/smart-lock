@@ -23,7 +23,7 @@ class Client:
 
 	def masuk(self,uuid):
 
-		result = requests.get('10.42.0.215/smartlock/api/{}'.format(uuid))
+		result = requests.get('10.42.0.215:5000/smartlock/api/{}'.format(uuid))
 		message = {'status' : 'berhasil'}
 		return message
 
