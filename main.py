@@ -53,7 +53,7 @@ class LogActivity(db.Model):
 
 class PeriksaUid(Resource):
 
-    def get(self, uid, username):
+    def get(self, uid):
 
         tanggal = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -76,11 +76,11 @@ class PeriksaUid(Resource):
 
 class Client:
 
-    def user_masuk(self, uid, username):
+    def user_masuk(self, uid):
 
-        string_username = "".join(
-            chr(x) for x in list(username)
-        )
+        #string_username = "".join(
+        #    chr(x) for x in list(username)
+        #)
 
         user_validation = User.query.filter_by(
             id=uid
