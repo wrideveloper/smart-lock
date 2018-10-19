@@ -30,7 +30,7 @@ sys.path.append('..')
 #local import
 from main import Client
 
-cc = Client()#instansiasi class client
+client = Client()#instansiasi class client
 
 
 
@@ -96,7 +96,7 @@ while continue_reading:
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
             MIFAREReader.MFRC522_Read(8)
-            cc.user_keluar(str(uuid))
+            client.cek_status(str(uuid))
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"

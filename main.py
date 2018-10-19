@@ -75,44 +75,33 @@ class PeriksaUid(Resource):
 
 
 class Client:
-
-    def user_masuk(self, uid):
-
-        user_validation = User.query.filter_by(
-            id=uid
+    def cek_status(self,uid):
+        otomat_validation = LogActivity.query.filter_by(
+            uid = uid, user_in = None
         ).first()
 
-        if user_validation:
+        if otomat_validation is None:
 
-            api_get = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(
-                    uid))
+            user_masuk_keluar(uid)
 
-            if api_get.status_code == 200:
+"""Fungsi Untuk Validasi"""
 
-                print 'Selamat Datang Di Basecame WRI'
+def user_masuk_keluar(uid):
 
-            else:
-                abort()
+    user_validation = User.query.filter_by(
+        id=uid
+    ).first()
 
-    def user_keluar(self, uid):
+    if user_validation:
 
+        api_get = requests.get('http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(uid))
 
-        user_validation = User.query.filter_by(id=uid).first()
+        if api_get.status_code == 200:
 
-        if user_validation:
+            print 'Selamat Datang Di WRI Politeknik Negeri Malang'
 
-            gate_api = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(
-                    uid))
-
-            if gate_api.status_code == 200:
-
-                print "Selamat Jalan"
-
-            else:
-
-                abort()
+        else:
+            abort()
 
 
 """ API Route """
