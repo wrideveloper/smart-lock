@@ -90,7 +90,7 @@ class Client:
 
             api_get = requests.get(
                 'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/{}'.format(
-                    uid, string_username))
+                    uid))
 
             if api_get.status_code == 200:
 
