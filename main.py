@@ -55,7 +55,7 @@ class PeriksaUid(Resource):
 
     def get(self, uid):
 
-        tanggal = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        tanggal = datetime.datetime.now()
 
         user_activity = LogActivity.query.filter_by(
             uid=uid, user_out=None
