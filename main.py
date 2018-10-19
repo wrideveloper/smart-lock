@@ -78,10 +78,6 @@ class Client:
 
     def user_masuk(self, uid):
 
-        #string_username = "".join(
-        #    chr(x) for x in list(username)
-        #)
-
         user_validation = User.query.filter_by(
             id=uid
         ).first()
@@ -99,9 +95,8 @@ class Client:
             else:
                 abort()
 
-    def user_keluar(self, uid, username):
+    def user_keluar(self, uid):
 
-        string_username = "".join(chr(x) for x in list(username))
 
         user_validation = User.query.filter_by(id=uid).first()
 
@@ -109,7 +104,7 @@ class Client:
 
             gate_api = requests.get(
                 'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(
-                    uid, string_username))
+                    uid))
 
             if gate_api.status_code == 200:
 
