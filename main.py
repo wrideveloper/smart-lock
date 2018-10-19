@@ -89,7 +89,7 @@ class Client:
         if user_validation:
 
             api_get = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/{}'.format(
+                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(
                     uid))
 
             if api_get.status_code == 200:
@@ -108,7 +108,7 @@ class Client:
         if user_validation:
 
             gate_api = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/{}'.format(
+                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/'.format(
                     uid, string_username))
 
             if gate_api.status_code == 200:
@@ -124,7 +124,7 @@ class Client:
 
 
 routes = [
-    '/smartlock/wri/api/v1/<uid>/<username>'
+    '/smartlock/wri/api/v1/<uid>/'
 ]
 
 api.add_resource(PeriksaUid, *routes)
