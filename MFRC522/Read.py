@@ -28,9 +28,9 @@ import time,sys
 sys.path.append('..')
 
 #local import
-from main import Client
+#from main import Client
 
-cc = Client()#instansiasi class client
+#cc = Client()#instansiasi class client
 
 
 
@@ -75,7 +75,7 @@ while continue_reading:
         print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
         #uuid = "%s,%s,%s,%s"% (uid[0], uid[1], uid[2], uid[3])
         uuid = "%s%s%s%s" % (uid[0], uid[1], uid[2], uid[3])
-        cc.masuk(int(uuid))
+       # cc.masuk(int(uuid))
 
         # this is the default key for authentication
         key = [0xff,0xff,0xff,0xff,0xff,0xff]

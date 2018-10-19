@@ -16,7 +16,7 @@ api = Api(app)
 
 app.config[
     'SQLALCHEMY_DATABASE_URI'
-] = 'sqlite:////project.db'
+] = 'sqlite:///wri/user.db'
 
 
 db = SQLAlchemy(app)
