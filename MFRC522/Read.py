@@ -28,9 +28,9 @@ import time,sys
 sys.path.append('..')
 
 #local import
-#from main import Client
+from main import Client
 
-#cc = Client()#instansiasi class client
+cc = Client()#instansiasi class client
 
 
 
@@ -95,7 +95,8 @@ while continue_reading:
 
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
+            data = MIFAREReader.MFRC522_Read(8)
+            cc.user_masuk(int(uuid),data)
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"
@@ -128,7 +129,7 @@ def detected(self):
     # If we have the UID, continue
         if status == MIFAREReader.MI_OK:
 
-            
+
         # print uid
             print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
 
