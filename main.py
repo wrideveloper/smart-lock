@@ -16,7 +16,7 @@ api = Api(app)
 
 app.config[
     'SQLALCHEMY_DATABASE_URI'
-] = 'mysql://dt_admin:yafi2105@localhost/coba'
+] = 'mysql://admin_wri:wripolinema05@localhost/project'
 
 
 db = SQLAlchemy(app)
