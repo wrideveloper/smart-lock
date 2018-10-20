@@ -149,7 +149,7 @@ while read:
         # Check if authenticated
         if status == MIFAREReader.MI_OK:
             MIFAREReader.MFRC522_Read(8)
-            client.cek_status(str(uuid))
+            cek_status(str(uuid))
             MIFAREReader.MFRC522_StopCrypto1()
         else:
             print "Authentication error"
