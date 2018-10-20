@@ -106,55 +106,53 @@ def user_masuk_keluar(uid):
             abort()
 
 """Fungsi Read RFID"""
-def main():
+MIFAREReader = MFRC522.MFRC522()
+read = True
 
-    MIFAREReader = MFRC522.MFRC522()
-    read = True
+while read:
+    # Scan for cards
+    (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
 
-    while read:
-        # Scan for cards
-        (status, TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+    # If a card is found
 
-        # If a card is found
+    if status == MIFAREReader.MI_OK:
+        print "Card detected"
 
+    # Get the UID of the card
+    (status, uid) = MIFAREReader.MFRC522_Anticoll()
+
+    # If we have the UID, continue
+    if status == MIFAREReader.MI_OK:
+
+        # print uid
+        print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
+        # uuid = "%s,%s,%s,%s"% (uid[0], uid[1], uid[2], uid[3])
+        uuid = "%s%s%s%s" % (uid[0], uid[1], uid[2], uid[3])
+        # cc.masuk(int(uuid))
+
+        # this is the default key for authentication
+        key = [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]
+
+        # select the scanned tag
+        MIFAREReader.MFRC522_SelectTag(uid)
+        # turn on led
+        GPIO.setup(8, GPIO.OUT)
+        GPIO.output(8, GPIO.HIGH)
+        # stop looping
+        time.sleep(3)
+        continue_reading = False
+        GPIO.output(8, GPIO.LOW)
+        GPIO.cleanup()
+        # authenticate
+        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
+
+        # Check if authenticated
         if status == MIFAREReader.MI_OK:
-            print "Card detected"
-
-        # Get the UID of the card
-        (status, uid) = MIFAREReader.MFRC522_Anticoll()
-
-        # If we have the UID, continue
-        if status == MIFAREReader.MI_OK:
-
-            # print uid
-            print "card read uid: %s,%s,%s,%s" % (uid[0], uid[1], uid[2], uid[3])
-            # uuid = "%s,%s,%s,%s"% (uid[0], uid[1], uid[2], uid[3])
-            uuid = "%s%s%s%s" % (uid[0], uid[1], uid[2], uid[3])
-            # cc.masuk(int(uuid))
-
-            # this is the default key for authentication
-            key = [0xff, 0xff, 0xff, 0xff, 0xff, 0xff]
-
-            # select the scanned tag
-            MIFAREReader.MFRC522_SelectTag(uid)
-            # turn on led
-            GPIO.setup(8, GPIO.OUT)
-            GPIO.output(8, GPIO.HIGH)
-            # stop looping
-            time.sleep(3)
-            continue_reading = False
-            GPIO.output(8, GPIO.LOW)
-            GPIO.cleanup()
-            # authenticate
-            status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-            # Check if authenticated
-            if status == MIFAREReader.MI_OK:
-                MIFAREReader.MFRC522_Read(8)
-                client.cek_status(str(uuid))
-                MIFAREReader.MFRC522_StopCrypto1()
-            else:
-                print "Authentication error"
+            MIFAREReader.MFRC522_Read(8)
+            client.cek_status(str(uuid))
+            MIFAREReader.MFRC522_StopCrypto1()
+        else:
+            print "Authentication error"
 
 
 
@@ -169,5 +167,5 @@ api.add_resource(PeriksaUid, *routes)
 
 
 if __name__ == '__main__':
-    main() 
+    #main()
     app.run(debug=True, host='0.0.0.0')
