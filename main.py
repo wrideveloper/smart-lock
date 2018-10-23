@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 from  MFRC522 import  MFRC522
 import time
 import sys
-from MFRC522.Read import detected
+#from MFRC522.Read import detected
 
 sys.path.append('Stepper')
 from Stepper import open
