@@ -7,10 +7,13 @@ from flask_sqlalchemy import SQLAlchemy
 import datetime
 import requests
 import RPi.GPIO as GPIO
+
 from  MFRC522 import  MFRC522
 import time
 import sys
 
+sys.path.append('Stepper')
+from Stepper import open
 
 app = Flask(__name__)
 
@@ -100,6 +103,7 @@ def user_masuk_keluar(uid):
 
         if api_get.status_code == 200:
 
+            open()
             print 'Selamat Datang Di WRI Politeknik Negeri Malang'
 
         else:
