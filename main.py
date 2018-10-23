@@ -11,6 +11,7 @@ import RPi.GPIO as GPIO
 from  MFRC522 import  MFRC522
 import time
 import sys
+from MFRC522.Read import detected
 
 sys.path.append('Stepper')
 from Stepper import open
@@ -112,7 +113,6 @@ def user_masuk_keluar(uid):
 """Fungsi Read RFID"""
 
 
-
 """ API Route """
 
 
@@ -126,3 +126,4 @@ api.add_resource(PeriksaUid, *routes)
 if __name__ == '__main__':
     #main()
     app.run(debug=True)
+    detected()
