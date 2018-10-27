@@ -6,7 +6,15 @@ from flask_restful import abort
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import requests
+import RPi.GPIO as GPIO
 
+from  MFRC522 import  MFRC522
+import time
+import sys
+#from MFRC522.Read import detected
+
+sys.path.append('Stepper')
+from Stepper import open
 
 app = Flask(__name__)
 
@@ -16,7 +24,7 @@ api = Api(app)
 
 app.config[
     'SQLALCHEMY_DATABASE_URI'
-] = 'mysql://dt_admin:yafi2105@localhost/coba'
+] = 'sqlite:///wri/user.db'
 
 
 db = SQLAlchemy(app)
@@ -53,83 +61,36 @@ class LogActivity(db.Model):
 
 class PeriksaUid(Resource):
 
-    def get(self, uid, username):
-
-        tanggal = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        user_activity = LogActivity.query.filter_by(
-            uid=uid, user_out=None
-        ).first()
-
-        if user_activity is None:
-
-            add = LogActivity(uid=uid, user_in=tanggal)
-
-            db.session.add(add)
-            db.session.commit()
-
-        elif user_activity and user_activity.user_out is None:
-
-            user_activity.user_out = tanggal
-            db.session.commit()
-
-
-class Client:
-
-    def user_masuk(self, uid, username):
-
-        string_username = "".join(
-            chr(x) for x in list(username)
-        )
-
+    def get(self, uid):
+        tanggal = datetime.datetime.now()
         user_validation = User.query.filter_by(
-            id=uid
+            id = uid
         ).first()
 
         if user_validation:
+            user_log = LogActivity.query.filter_by(
+            uid = uid, user_out = None
+            ).first()
 
-            api_get = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/{}'.format(
-                    uid, string_username))
+            if user_log is None:
+                add_log = LogActivity(uid = uid,user_in = tanggal)
+                db.session.add(add_log)
+                db.session.commit()
+            elif user_log and user_out is None:
+                user_log.user_out = tanggal
+                db.session.commit()
 
-            if api_get.status_code == 200:
+        else:
 
-                print 'Selamat Datang Di Basecame WRI'
-
-            else:
-                abort()
-
-    def user_keluar(self, uid, username):
-
-        string_username = "".join(chr(x) for x in list(username))
-
-        user_validation = User.query.filter_by(id=uid).first()
-
-        if user_validation:
-
-            gate_api = requests.get(
-                'http://127.0.0.1:5000/smartlock/wri/api/v1/{}/{}'.format(
-                    uid, string_username))
-
-            if gate_api.status_code == 200:
-
-                print "Selamat Jalan"
-
-            else:
-
-                abort()
-
-
-""" API Route """
+            print 'tidak ada'
 
 
 routes = [
-    '/smartlock/wri/api/v1/<uid>/<username>'
+    '/smartlock/wri/api/v1/<uid>/'
 ]
 
 api.add_resource(PeriksaUid, *routes)
 
 
 if __name__ == '__main__':
-
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
