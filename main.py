@@ -29,7 +29,7 @@ app.config[
 
 db = SQLAlchemy(app)
 
-""" Deklarasi Class """
+
 
 
 class User(db.Model):
