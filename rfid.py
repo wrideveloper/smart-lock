@@ -5,6 +5,7 @@ import MFRC522
 import signal
 import time
 import requests
+from Stepper
 
 print 'Workshop Dan Riset Informatika'
 
@@ -31,10 +32,10 @@ while continue_reading:
             stateRFID = GPIO.input(8)
 
             if stateRFID == 0:
-                print 'Selamat Datang'
                 GPIO.output(8,GPIO.HIGH)
+                stepper_jalan(0)
 
             if stateRFID == 1:
-                print 'Selamat Jalan'
                 GPIO.output(8,GPIO.LOW)
+                stepper_jalan(1)
         time.sleep(.5)
