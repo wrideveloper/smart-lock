@@ -76,7 +76,7 @@ class PeriksaUid(Resource):
                 add_log = LogActivity(uid = uid,user_in = tanggal)
                 db.session.add(add_log)
                 db.session.commit()
-            elif user_log and user_out is None:
+            elif user_log and user_log.user_out is None:
                 user_log.user_out = tanggal
                 db.session.commit()
 
