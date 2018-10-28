@@ -5,7 +5,7 @@ import MFRC522
 import signal
 import time
 import requests
-from stepper
+from stepper import stepper_jalan
 
 print 'Workshop Dan Riset Informatika'
 
