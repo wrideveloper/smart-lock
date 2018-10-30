@@ -4,10 +4,12 @@ from flask_restful import Resource
 from flask_restful import Api
 from flask_restful import abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 import requests
 import RPi.GPIO as GPIO
-
 from  MFRC522 import  MFRC522
 import time
 import sys
@@ -18,7 +20,7 @@ from Stepper import open
 
 app = Flask(__name__)
 
-
+login_manager = LoginManager()
 api = Api(app)
 
 
@@ -28,6 +30,10 @@ app.config[
 
 
 db = SQLAlchemy(app)
+
+#Blueprint
+from .admin import admin as admin_blueprint
+app.register_blueprint(admin_blueprint)
 
 
 
@@ -58,6 +64,27 @@ class LogActivity(db.Model):
 
         return '<LogActivity: {}>'.format(self.uid)
 
+class UserWeb(UserMixin,db.Model):
+    __tablename__ = 'user_db'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(10))
+    password_has = db.Column(db.String(255))
+
+    @propety
+    def password(self):
+        raise AttributeError('Passeord is not a readable attribute')
+
+    def verify_password(self,password):
+        return check_password_hash(self.password_has, password)
+
+    def __repr__(self):
+        return '<UserWeb : {}>'.format(self.username)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return UserWeb.query.get(user_id)
+
+
 
 class PeriksaUid(Resource):
 
@@ -76,7 +103,7 @@ class PeriksaUid(Resource):
                 add_log = LogActivity(uid = uid,user_in = tanggal)
                 db.session.add(add_log)
                 db.session.commit()
-            elif user_log and user_out is None:
+            elif user_log and user_log.user_out is None:
                 user_log.user_out = tanggal
                 db.session.commit()
 

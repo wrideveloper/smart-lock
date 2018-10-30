@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }} | Teknologi Informasi</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/animate.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'css/style.css')}}">
+  </head>
+  <body>
+    <div class="top-content">
+      <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" name="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+            </button>
+            <a href="#" class="navbar-brand">State Polytechnic of Malang</a>
+          </div>
+          <div class="collapse navbar-collapse" id="top-navbar1">
+            <ul class="nav navbar-nav navbar-right">
+							<li><a href="{{ url_for('home.homepage') }}">Home</a></li>
+							<li><a href="#">About</a></li>
+              <li><a class="btn btn-link-3" href="{{ url_for('auth.mahasiswa_login') }}">Login Mahasiswa</a></li>
+							<li><a class="btn btn-link-3" href="{{ url_for('auth.dosen_login') }}">Login Dosen</a></li>
+						</ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    {% block body %}
+    {% endblock %}
+
+    <!-- Javascript -->
+    <script src="{{url_for('static',filename = 'js/jquery-1.11.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js/jquery.backstretch.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js/wow.min.js')}}"></script>
+    <script src="{{url_for('static',filename = 'js/scripts.js')}}"></script>
+  </body>
+</html>
