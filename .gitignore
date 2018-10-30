@@ -109,3 +109,11 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+#MFRC522
+MFRC522/Baca.py
+MFRC522/Delete.py
+MFRC522/Dump.py
+MFRC522/Read.py
+MFRC522/RelaySelo.py
+MFRC522/Write.py

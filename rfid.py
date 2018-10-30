@@ -5,12 +5,12 @@ import MFRC522
 import signal
 import time
 import requests
-from Stepper
+from stepper import stepper_jalan
 
 print 'Workshop Dan Riset Informatika'
 
 GPIO.setwarnings(False)
-GPIO.setup(8, GPIO.OUTPUT)
+GPIO.setup(8, GPIO.OUT)
 
 continue_reading = True
 MIFAREReader = MFRC522.MFRC522()
