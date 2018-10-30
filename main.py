@@ -58,6 +58,9 @@ class LogActivity(db.Model):
 
         return '<LogActivity: {}>'.format(self.uid)
 
+class UserWeb(db.Model):
+    __tablename__ = 'user_db'
+    id = db.Column()
 
 class PeriksaUid(Resource):
 
