@@ -64,7 +64,7 @@ class LogActivity(db.Model):
 
         return '<LogActivity: {}>'.format(self.uid)
 
-<<<<<<< HEAD
+
 class UserWeb(UserMixin,db.Model):
     __tablename__ = 'user_db'
     id = db.Column(db.Integer, primary_key = True)
@@ -86,11 +86,11 @@ class UserWeb(UserMixin,db.Model):
         return UserWeb.query.get(user_id)
 
 
-=======
+
 class UserWeb(db.Model):
     __tablename__ = 'user_db'
     id = db.Column()
->>>>>>> master
+
 
 class PeriksaUid(Resource):
 
