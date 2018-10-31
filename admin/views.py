@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user
 
 from . import admin
 from main import db
-from main import UserWeb
+#from main import UserWeb
 from form import LoginForm
 
 
@@ -14,11 +14,11 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         pengguna = UserWeb.query.filter_by(username = form.username.data).first()
-        if pengguna is not None adn pengguna.verify_password(
-        form.password.data
-        ):
-        login_user(pengguna)
-        return redirect(url_for('admin.dashboard'))
+        if pengguna is not None and pengguna.verify_password(
+        form.password.data):
+            
+            login_user(pengguna)
+            return redirect(url_for('admin.dashboard'))
 
         else:
             flash('invalid username and password')
@@ -29,7 +29,7 @@ def login():
 def dashboard():
     return render_template('admin/dashboard.html', title = "Wri Dashboard")
 
-@auth.route('/logout')
+@admin.route('/logout')
 @login_required
 def logout():
     """

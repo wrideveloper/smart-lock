@@ -32,7 +32,7 @@ app.config[
 db = SQLAlchemy(app)
 
 #Blueprint
-from .admin import admin as admin_blueprint
+from admin import admin as admin_blueprint
 app.register_blueprint(admin_blueprint)
 
 
@@ -66,12 +66,12 @@ class LogActivity(db.Model):
 
 
 class UserWeb(UserMixin,db.Model):
-    __tablename__ = 'user_db'
+    __tablename__ = 'pengguna'
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(10))
     password_has = db.Column(db.String(255))
 
-    @propety
+    @property
     def password(self):
         raise AttributeError('Passeord is not a readable attribute')
 
