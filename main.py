@@ -8,6 +8,7 @@ from flask_login import LoginManager
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+from flask_bootstrap import Bootstrap
 import requests
 import RPi.GPIO as GPIO
 from  MFRC522 import  MFRC522
@@ -19,11 +20,13 @@ sys.path.append('Stepper')
 from Stepper import open
 
 app = Flask(__name__)
+Bootstrap(app)
+
 
 login_manager = LoginManager()
 api = Api(app)
 
-
+app.config['SECRET_KEY'] = 'ProjectWRI1231'
 app.config[
     'SQLALCHEMY_DATABASE_URI'
 ] = 'sqlite:///wri/user.db'
@@ -34,7 +37,6 @@ db = SQLAlchemy(app)
 #Blueprint
 from admin import admin as admin_blueprint
 app.register_blueprint(admin_blueprint)
-
 
 
 
@@ -70,27 +72,24 @@ class UserWeb(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(10))
     password_has = db.Column(db.String(255))
+    def __repr__(self):
+
+        return '<UserWeb: {}>'.format(self.username)
 
     @property
     def password(self):
         raise AttributeError('Passeord is not a readable attribute')
 
+    @password.setter
     def verify_password(self,password):
         return check_password_hash(self.password_has, password)
 
     def __repr__(self):
         return '<UserWeb : {}>'.format(self.username)
 
-    @login_manager.user_loader
-    def load_user(user_id):
-        return UserWeb.query.get(user_id)
-
-
-
-class UserWeb(db.Model):
-    __tablename__ = 'user_db'
-    id = db.Column()
-
+@login_manager.user_loader
+def load_user(user_id):
+    return UserWeb.query.get(user_id)
 
 class PeriksaUid(Resource):
 
@@ -126,4 +125,4 @@ api.add_resource(PeriksaUid, *routes)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')
