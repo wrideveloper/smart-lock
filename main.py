@@ -66,35 +66,13 @@ class LogActivity(db.Model):
 
         return '<LogActivity: {}>'.format(self.uid)
 
-
 class UserWeb(UserMixin,db.Model):
 
     __tablename__ = 'pengguna'
+
     id = db.Column(db.Integer, primary_key = True)
-<<<<<<< HEAD
     username = db.Column(db.String(10))
     password_has = db.Column(db.String(255))
-    def __repr__(self):
-
-        return '<UserWeb: {}>'.format(self.username)
-
-    @property
-    def password(self):
-        raise AttributeError('Passeord is not a readable attribute')
-
-    @password.setter
-    def verify_password(self,password):
-        return check_password_hash(self.password_has, password)
-
-    def __repr__(self):
-        return '<UserWeb : {}>'.format(self.username)
-
-@login_manager.user_loader
-def load_user(user_id):
-    return UserWeb.query.get(user_id)
-=======
-    username = db.Column(db.String(60), index = True, unique = True)
-    password_hash = db.Column(db.String(128))
 
     @property
     def password(self):
@@ -122,9 +100,10 @@ def load_user(user_id):
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
-    return UserWeb.query.get(int(user_id))
+return UserWeb.query.get(int(user_id))
 
->>>>>>> abe29dbf67d0e0f8528461fb6c01f1a5b8c9fd2e
+
+
 
 class PeriksaUid(Resource):
 
