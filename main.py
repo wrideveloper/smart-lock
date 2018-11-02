@@ -1,3 +1,5 @@
+from admin import admin as admin_blueprint
+from Stepper import open
 from flask import Flask
 from flask import jsonify
 from flask_restful import Resource
@@ -11,13 +13,12 @@ import datetime
 from flask_bootstrap import Bootstrap
 import requests
 import RPi.GPIO as GPIO
-from  MFRC522 import  MFRC522
+from MFRC522 import MFRC522
 import time
 import sys
 #from MFRC522.Read import detected
 
 sys.path.append('Stepper')
-from Stepper import open
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -34,10 +35,8 @@ app.config[
 
 db = SQLAlchemy(app)
 
-#Blueprint
-from admin import admin as admin_blueprint
+# Blueprint
 app.register_blueprint(admin_blueprint)
-
 
 
 class User(db.Model):
@@ -66,11 +65,12 @@ class LogActivity(db.Model):
 
         return '<LogActivity: {}>'.format(self.uid)
 
-class UserWeb(UserMixin,db.Model):
+
+class UserWeb(UserMixin, db.Model):
 
     __tablename__ = 'pengguna'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(10))
     password_has = db.Column(db.String(255))
 
@@ -98,11 +98,13 @@ class UserWeb(UserMixin,db.Model):
         return '<UserWeb: {}>'.format(self.username)
 
 # Set up user_loader
+
+
 @login_manager.user_loader
 def load_user(user_id):
+
+
 return UserWeb.query.get(int(user_id))
-
-
 
 
 class PeriksaUid(Resource):
@@ -110,16 +112,16 @@ class PeriksaUid(Resource):
     def get(self, uid):
         tanggal = datetime.datetime.now()
         user_validation = User.query.filter_by(
-            id = uid
+            id=uid
         ).first()
 
         if user_validation:
             user_log = LogActivity.query.filter_by(
-            uid = uid, user_out = None
+                uid=uid, user_out=None
             ).first()
 
             if user_log is None:
-                add_log = LogActivity(uid = uid,user_in = tanggal)
+                add_log = LogActivity(uid=uid, user_in=tanggal)
                 db.session.add(add_log)
                 db.session.commit()
             elif user_log and user_log.user_out is None:
@@ -139,4 +141,4 @@ api.add_resource(PeriksaUid, *routes)
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')

@@ -13,21 +13,23 @@ from form import LoginForm
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        pengguna = UserWeb.query.filter_by(username = form.username.data).first()
+        pengguna = UserWeb.query.filter_by(username=form.username.data).first()
         if pengguna is not None and pengguna.verify_password(
-        form.password.data):
-            
+                form.password.data):
+
             login_user(pengguna)
             return redirect(url_for('admin.dashboard'))
 
         else:
             flash('invalid username and password')
-    return render_template('admin/index.html', form = form, title = 'Login')
+    return render_template('admin/index.html', form=form, title='Login')
+
 
 @admin.route('/wri/admin/dashboard/')
 @login_required
 def dashboard():
-    return render_template('admin/dashboard.html', title = "Wri Dashboard")
+    return render_template('admin/dashboard.html', title="Wri Dashboard")
+
 
 @admin.route('/logout')
 @login_required
